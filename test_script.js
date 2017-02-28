@@ -19,7 +19,14 @@ client.connect((err) => {
     client.end();
     return console.log('please enter a ship ID');
   }
-  client.query("SELECT ships.id, ships.name AS ship, fleets.name AS fleet, date_commissioned FROM ships RIGHT JOIN fleets ON ships.fleet_id = fleets.id WHERE ships.id = $1", [query], (err, result) => {
+  client.query(`SELECT
+                  ships.id, ships.name AS ship, fleets.name AS fleet, date_commissioned
+                FROM
+                  ships
+                JOIN
+                  fleets ON ships.fleet_id = fleets.id
+                WHERE
+                  ships.id = $1`, [query], (err, result) => {
     if (err) {
       return console.error("error running query", err);
     }
